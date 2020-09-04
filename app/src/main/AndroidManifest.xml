@@ -16,9 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" android:label="" android:parentActivityName=".LoginActivity" />
+        <activity android:name=".MainActivity" android:label="@string/welcome" android:parentActivityName=".LoginActivity" />
         <activity android:name=".LoginActivity" android:label="@string/Login" android:parentActivityName=".Splash"/>
-        <activity android:name=".Registration" android:label="@string/Registration" android:parentActivityName=".LoginActivity"/>
     </application>
 
 </manifest>

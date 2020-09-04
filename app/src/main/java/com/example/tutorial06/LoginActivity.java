@@ -1,6 +1,8 @@
 package com.example.tutorial06;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
@@ -16,13 +18,16 @@ public class LoginActivity extends AppCompatActivity {
     EditText Email;
     EditText Password;
     int count = 5;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         Email=(EditText)findViewById(R.id.edtEmail);
         Password=(EditText)findViewById(R.id.edtPassword);
-
+        sharedPreferences = getSharedPreferences("Login", Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
         btnLogin = (Button)findViewById(R.id.btnLogin);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -59,9 +64,12 @@ public class LoginActivity extends AppCompatActivity {
             t.show();
             count--;
         }else{
+            editor.putString("Username",Email.getText().toString());
+            editor.putBoolean("isLogin",true);
+            editor.commit();
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
-            finish();
+            //finish();
         }
     }
     public boolean isEmpty(EditText text){
@@ -73,10 +81,4 @@ public class LoginActivity extends AppCompatActivity {
         CharSequence email = text.getText().toString();
         return (Patterns.EMAIL_ADDRESS.matcher(email).matches());
     }
-
-    public void registration_click(View view) {
-                Intent intent = new Intent(LoginActivity.this,Registration.class);
-                startActivity(intent);
-    }
-
 }

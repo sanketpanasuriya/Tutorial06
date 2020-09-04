@@ -1,6 +1,8 @@
 package com.example.tutorial06;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -14,17 +16,20 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Splash extends AppCompatActivity {
-    Animation ZoomOut,SlideUp;
+    Animation ZoomOut, SlideUp;
     TextView txtWelcome;
     ImageView imgAndroid;
+
+    SharedPreferences preferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
         imgAndroid = (ImageView) findViewById(R.id.imgAndroid);
-        txtWelcome = (TextView) findViewById(R.id.txtWelcome);
-
+        txtWelcome = (TextView) findViewById(R.id.lblWelcome);
+        preferences= getSharedPreferences("Login", MODE_PRIVATE);
         //imgAndroid.setVisibility(View.INVISIBLE);
         //txtWelcome.setVisibility(View.INVISIBLE);
 
@@ -32,27 +37,33 @@ public class Splash extends AppCompatActivity {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                ZoomOut = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.blinck);
+                ZoomOut = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.blinck);
                 txtWelcome.setVisibility(View.VISIBLE);
                 txtWelcome.startAnimation(ZoomOut);
             }
-        },200);
+        }, 200);
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                SlideUp = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.slide_up);
+                SlideUp = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up);
                 imgAndroid.setVisibility(View.VISIBLE);
                 imgAndroid.startAnimation(SlideUp);
             }
-        },200);
+        }, 200);
 
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                Intent intent = new Intent(Splash.this,LoginActivity.class);
-                startActivity(intent);
-                finish();
+                if (preferences.contains("isLogin")) {
+                    Intent intent = new Intent(Splash.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }else{
+                    Intent intent = new Intent(Splash.this, LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
             }
-        },2000);
+        }, 2000);
     }
 }
