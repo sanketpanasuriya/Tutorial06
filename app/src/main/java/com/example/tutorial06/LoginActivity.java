@@ -30,6 +30,10 @@ public class LoginActivity extends AppCompatActivity {
         editor = sharedPreferences.edit();
         btnLogin = (Button)findViewById(R.id.btnLogin);
 
+        if(sharedPreferences.contains("isLogin")){
+            Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+            startActivity(intent);
+        }
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
 
@@ -37,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
                 checkDataEntered();
             }
         });
+
     }
     void checkDataEntered(){
         if(count==0){

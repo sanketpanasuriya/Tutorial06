@@ -11,4 +11,9 @@
     <color name="colorEndSplash">#CCFF90</color>
     <color name="colorBGtint">#FF80AB</color>
     <color name="colorPink">#C51162</color>
+
+    <color name="colorRed">#FF1744</color>
+    <color name="colorBlue">#2979FF</color>
+    <color name="colorGreen">#00C853</color>
+
 </resources>
